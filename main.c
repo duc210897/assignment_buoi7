@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
    
     while (1)
     {
-        printf("Enter your choice: ");
+        printf("\n\nEnter your choice: ");
         char input[2];
         scanf("%s", input);
         int num = atoi(input);
