@@ -34,15 +34,17 @@ struct st_contact_directory_intance_ctrl
 
     void *p_tail;     // store last contact directory
 
-    void ((*p_contact_directory_function[3])(struct st_contact_directory_intance_ctrl *p_ctrl));
+    FILE *file;
+
+    int ((*p_contact_directory_function[3])(struct st_contact_directory_intance_ctrl *p_ctrl));
 } typedef contact_directory_intance_ctrl_t;
 
 
-void initialize_data(contact_directory_intance_ctrl_t *p_ctrl, contact_directory_configuration_t *p_config);
+int initialize_data(contact_directory_intance_ctrl_t *p_ctrl, contact_directory_configuration_t *p_config);
 
 /* Declare function */
-void add_infor_into_contact_directory(contact_directory_intance_ctrl_t *p_ctrl);
+int add_infor_into_contact_directory(contact_directory_intance_ctrl_t *p_ctrl);
 
-void display_available_contact_directory(contact_directory_intance_ctrl_t *p_ctrl);
+int display_available_contact_directory(contact_directory_intance_ctrl_t *p_ctrl);
 
-void research_contact_directory(contact_directory_intance_ctrl_t *p_ctrl);
+int research_contact_directory(contact_directory_intance_ctrl_t *p_ctrl);
