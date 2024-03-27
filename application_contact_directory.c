@@ -29,12 +29,48 @@ static int write_alldata_to_file(contact_directory_intance_ctrl_t *p_ctrl)
     p_ctrl->current_contact_directory = lp_contact_directory;
     fclose(p_ctrl->file);
 }
-static int load_alldata_to_file(contact_directory_configuration_t *p_ctrl)
+static int load_alldata_to_file(contact_directory_intance_ctrl_t *p_ctrl)
 {
+    contact_directory_configuration_t *lp_next, *lp_contact_directory;
+    lp_contact_directory = p_ctrl->config_contact_directory;
 
+    char *lp_name     =  (char *)malloc(100*sizeof(char)); // need to improve
+    char *lp_phonenum =  (char *)malloc(100*sizeof(char));
+    char *lp_address  =  (char *)malloc(100*sizeof(char));
+    int count_data = 0;
+    int head_count = 0;
+    while ((count_data = fscanf(p_ctrl->file , "name: %s\nphone: %s\naddress: %s\n", lp_name, lp_phonenum, lp_address)) != EOF) {
+        if(count_data == 3)
+        {
+            head_count++;
+            lp_contact_directory->p_name         = lp_name;
+            lp_contact_directory->p_number_phone = lp_phonenum;
+            lp_contact_directory->p_addresss     = lp_address;
+
+            p_ctrl->p_tail = lp_contact_directory;
+            if(head_count == 1)
+            {
+                p_ctrl->p_head = lp_contact_directory;
+            }
+            p_ctrl->config_contact_directory = lp_contact_directory;
+            p_ctrl->current_contact_directory = lp_contact_directory;
+
+            lp_next = lp_contact_directory;
+            lp_contact_directory = (contact_directory_configuration_t *)malloc(sizeof(contact_directory_configuration_t));
+            lp_contact_directory->p_next_contact_directory = lp_next;
+        }
+        lp_name     =  (char *)malloc(100*sizeof(char));
+        lp_phonenum =  (char *)malloc(100*sizeof(char));
+        lp_address  =  (char *)malloc(100*sizeof(char));
+    }
+
+    free(lp_name);
+    free(lp_phonenum);
+    free(lp_address);
+    free(lp_contact_directory);
 }
 
-int initialize_data(contact_directory_intance_ctrl_t *p_ctrl, 
+int initialize_data(contact_directory_intance_ctrl_t *p_ctrl,
                                  contact_directory_configuration_t *p_config)
 {
     p_ctrl->p_head = NULL;
@@ -52,7 +88,9 @@ int initialize_data(contact_directory_intance_ctrl_t *p_ctrl,
     p_config->p_next_contact_directory = NULL;
     p_ctrl->config_contact_directory  = p_config;
     p_ctrl->current_contact_directory = NULL;
-    p_ctrl->file = fopen("assignment7.txt", "a");
+    p_ctrl->file = fopen("assignment7.txt", "r");
+
+    load_alldata_to_file(p_ctrl);
 
     return 1; // <= should be a enum ex: STATUS_OK
 }
@@ -160,9 +198,4 @@ int research_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
     {
         printf("Name is not available\n");
     }
-}
-
-int research_contact_directory1(contact_directory_intance_ctrl_t *p_ctrl)
-{
-
 }
