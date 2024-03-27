@@ -29,7 +29,7 @@ static int write_alldata_to_file(contact_directory_intance_ctrl_t *p_ctrl)
     p_ctrl->current_contact_directory = lp_contact_directory;
     fclose(p_ctrl->file);
 }
-static int load_alldata_to_file(contact_directory_intance_ctrl_t *p_ctrl)
+static int load_alldata_to_ram(contact_directory_intance_ctrl_t *p_ctrl)
 {
     contact_directory_configuration_t *lp_next, *lp_contact_directory;
     lp_contact_directory = p_ctrl->config_contact_directory;
@@ -90,7 +90,7 @@ int initialize_data(contact_directory_intance_ctrl_t *p_ctrl,
     p_ctrl->current_contact_directory = NULL;
     p_ctrl->file = fopen("assignment7.txt", "r");
 
-    load_alldata_to_file(p_ctrl);
+    load_alldata_to_ram(p_ctrl); // consider this method if we work with milion data
 
     return 1; // <= should be a enum ex: STATUS_OK
 }
