@@ -90,7 +90,7 @@ int initialize_data(contact_directory_intance_ctrl_t *p_ctrl,
     p_ctrl->current_contact_directory = NULL;
     p_ctrl->file = fopen("assignment7.txt", "r");
 
-    load_alldata_to_ram(p_ctrl); // consider this method if we work with milion data
+    load_alldata_to_ram(p_ctrl); // consider this method if we work with milion data 
 
     return 1; // <= should be a enum ex: STATUS_OK
 }

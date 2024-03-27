@@ -9,7 +9,6 @@ int main(int argc, char *argv[])
     initialize_data(&apllication_control, gp_apllication_configuration);
 
     printf("Welcome to the Contact Manager! \n 1. Add a new contact \n 2. Display all contacts \n 3. Search for a contact \n 4. Exit\n");
-   
     while (1)
     {
         printf("\n\nEnter your choice: ");

@@ -31,7 +31,6 @@ struct st_contact_directory_intance_ctrl
     control_status_t status;
 
     void *p_head;     // store first contact directory
-
     void *p_tail;     // store last contact directory
 
     FILE *file;
