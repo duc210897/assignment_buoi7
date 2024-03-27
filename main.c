@@ -27,6 +27,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    fclose(apllication_control.file);
+    fclose(apllication_control.file);  // Just make sure file is close
     return 0;
 }

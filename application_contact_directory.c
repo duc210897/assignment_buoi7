@@ -1,8 +1,37 @@
 #include "application_contact_directory.h"
 
-static void write_alldata_to_file(contact_directory_intance_ctrl_t *p_ctrl)
+static int write_alldata_to_file(contact_directory_intance_ctrl_t *p_ctrl)
 {
+    if(p_ctrl->p_tail == p_ctrl->current_contact_directory) //<= Let see, may be no need this condition
+    {
+        return 1;
+    }
+    contact_directory_configuration_t *lp_next, *lp_contact_directory;
     p_ctrl->file = freopen("assignment7.txt", "a", p_ctrl->file);
+
+    lp_contact_directory = p_ctrl->p_tail;
+
+    while(lp_contact_directory != p_ctrl->current_contact_directory)
+    {
+        fprintf(p_ctrl->file, "name: ");
+        fprintf(p_ctrl->file, lp_contact_directory->p_name);
+        fprintf(p_ctrl->file, "\n");
+        fprintf(p_ctrl->file, "phone: ");
+        fprintf(p_ctrl->file, lp_contact_directory->p_number_phone);
+        fprintf(p_ctrl->file, "\n");
+        fprintf(p_ctrl->file, "address: ");
+        fprintf(p_ctrl->file, lp_contact_directory->p_addresss);
+        fprintf(p_ctrl->file, "\n");
+
+        lp_next = lp_contact_directory->p_next_contact_directory;
+        lp_contact_directory = lp_next;
+    }
+    p_ctrl->current_contact_directory = lp_contact_directory;
+    fclose(p_ctrl->file);
+}
+static int load_alldata_to_file(contact_directory_configuration_t *p_ctrl)
+{
+
 }
 
 int initialize_data(contact_directory_intance_ctrl_t *p_ctrl, 
@@ -22,8 +51,8 @@ int initialize_data(contact_directory_intance_ctrl_t *p_ctrl,
     p_config->extend = NULL;
     p_config->p_next_contact_directory = NULL;
     p_ctrl->config_contact_directory  = p_config;
-    p_ctrl->current_contact_directory = p_config;
-    p_ctrl->file = fopen("assignment7.txt", "w+");
+    p_ctrl->current_contact_directory = NULL;
+    p_ctrl->file = fopen("assignment7.txt", "a");
 
     return 1; // <= should be a enum ex: STATUS_OK
 }
@@ -63,6 +92,8 @@ int add_infor_into_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
     printf("Enter address: ");
     scanf("%s", lp_address);
     p_ctrl->config_contact_directory->p_addresss = lp_address;
+
+    write_alldata_to_file(p_ctrl);
 
     return 1; // <= should be a enum ex: STATUS_OK
 }
@@ -108,7 +139,7 @@ int research_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
     lp_contact_directory = p_ctrl->p_tail;
 
     int stt = 1;
-    while(lp_contact_directory!= NULL)
+    while(lp_contact_directory != NULL)
     {
         stt = strcmp(search_name, lp_contact_directory->p_name);
         if (stt == 0) {
@@ -129,4 +160,9 @@ int research_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
     {
         printf("Name is not available\n");
     }
+}
+
+int research_contact_directory1(contact_directory_intance_ctrl_t *p_ctrl)
+{
+
 }
