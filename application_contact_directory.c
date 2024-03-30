@@ -78,7 +78,7 @@ error_status_t initialize_data(contact_directory_intance_ctrl_t *p_ctrl,
 {
 
 #if APPLICATION_CONTACT_DIRECTORY_CHECKING_PARAM
-    if(p_ctrl != NULL)
+    if(p_ctrl == NULL)
     {
         return E_NULL;
     }
@@ -108,7 +108,7 @@ error_status_t initialize_data(contact_directory_intance_ctrl_t *p_ctrl,
 error_status_t add_infor_into_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
 {
 #if APPLICATION_CONTACT_DIRECTORY_CHECKING_PARAM
-    if(p_ctrl != NULL)
+    if(p_ctrl == NULL)
     {
         return E_NULL;
     }
@@ -155,7 +155,7 @@ error_status_t add_infor_into_contact_directory(contact_directory_intance_ctrl_t
 error_status_t display_available_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
 {
 #if APPLICATION_CONTACT_DIRECTORY_CHECKING_PARAM
-    if(p_ctrl != NULL)
+    if(p_ctrl == NULL)
     {
         return E_NULL;
     }
@@ -186,7 +186,7 @@ error_status_t display_available_contact_directory(contact_directory_intance_ctr
 error_status_t research_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
 {
 #if APPLICATION_CONTACT_DIRECTORY_CHECKING_PARAM
-    if(p_ctrl != NULL)
+    if(p_ctrl == NULL)
     {
         return E_NULL;
     }
