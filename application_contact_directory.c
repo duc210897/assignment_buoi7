@@ -1,4 +1,7 @@
 #include "application_contact_directory.h"
+#include <assert.h>
+
+#define APPLICATION_CONTACT_DIRECTORY_CHECKING_PARAM 1
 
 static int write_alldata_to_file(contact_directory_intance_ctrl_t *p_ctrl)
 {
@@ -70,9 +73,16 @@ static int load_alldata_to_ram(contact_directory_intance_ctrl_t *p_ctrl)
     free(lp_contact_directory);
 }
 
-int initialize_data(contact_directory_intance_ctrl_t *p_ctrl,
+error_status_t initialize_data(contact_directory_intance_ctrl_t *p_ctrl,
                                  contact_directory_configuration_t *p_config)
 {
+
+#if APPLICATION_CONTACT_DIRECTORY_CHECKING_PARAM
+    if(p_ctrl != NULL)
+    {
+        return E_NULL;
+    }
+#endif
     p_ctrl->p_head = NULL;
     p_ctrl->p_tail = NULL;
 
@@ -90,13 +100,19 @@ int initialize_data(contact_directory_intance_ctrl_t *p_ctrl,
     p_ctrl->current_contact_directory = NULL;
     p_ctrl->file = fopen("assignment7.txt", "r");
 
-    load_alldata_to_ram(p_ctrl); // consider this method if we work with milion data 
+    load_alldata_to_ram(p_ctrl); // consider this method if we work with milion data
 
     return 1; // <= should be a enum ex: STATUS_OK
 }
 
-int add_infor_into_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
+error_status_t add_infor_into_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
 {
+#if APPLICATION_CONTACT_DIRECTORY_CHECKING_PARAM
+    if(p_ctrl != NULL)
+    {
+        return E_NULL;
+    }
+#endif
     if(p_ctrl->p_head == NULL)
     {
         // if there is no data before, p_head = p_tail
@@ -133,11 +149,17 @@ int add_infor_into_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
 
     write_alldata_to_file(p_ctrl);
 
-    return 1; // <= should be a enum ex: STATUS_OK
+    return E_OK; // <= should be a enum ex: STATUS_OK
 }
 
-int display_available_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
+error_status_t display_available_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
 {
+#if APPLICATION_CONTACT_DIRECTORY_CHECKING_PARAM
+    if(p_ctrl != NULL)
+    {
+        return E_NULL;
+    }
+#endif
     printf("Contact List:\n");
     if (p_ctrl->p_tail == NULL)
     {
@@ -158,11 +180,17 @@ int display_available_contact_directory(contact_directory_intance_ctrl_t *p_ctrl
         lp_contact_directory = lp_next;
         stt++;
     }
-    return 1; // <= should be a enum ex: STATUS_OK
+    return E_OK; // <= should be a enum ex: STATUS_OK
 }
 
-int research_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
+error_status_t research_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
 {
+#if APPLICATION_CONTACT_DIRECTORY_CHECKING_PARAM
+    if(p_ctrl != NULL)
+    {
+        return E_NULL;
+    }
+#endif
     char search_name[100];
     printf("Enter name to search for:");
     scanf("%s", search_name);
@@ -170,7 +198,7 @@ int research_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
     if (p_ctrl->p_tail == NULL)
     {
         printf("There are no data available\n");
-        return -1;
+        return E_NO_DATA_AVAILABLE;
     }
     contact_directory_configuration_t *lp_next, *lp_contact_directory;
 
@@ -198,4 +226,6 @@ int research_contact_directory(contact_directory_intance_ctrl_t *p_ctrl)
     {
         printf("Name is not available\n");
     }
+
+    return E_OK;
 }
